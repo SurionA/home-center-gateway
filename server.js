@@ -1,3 +1,5 @@
+require('dotenv-safe').config();
+
 const path = require('path');
 const gateway = require('express-gateway');
 

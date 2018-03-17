@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "dependencies": {
+    "dotenv-safe": "^5.0.1",
     "express-gateway": "^1.7.3"
   }
 }
