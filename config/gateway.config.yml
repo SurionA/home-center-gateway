@@ -7,9 +7,14 @@ apiEndpoints:
   api:
     host: localhost
     paths: '/ip'
+  hydrometries-api:
+    host: localhost
+    paths: ['/hydrometries', '/hydrometries/*']
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
+  hydrometries-service:
+    url: ${HYDROMETRIES_API_URL}
 policies:
   - basic-auth
   - cors
@@ -28,5 +33,18 @@ pipelines:
     # - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: httpbin 
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  hydrometries:
+    apiEndpoints:
+      - hydrometries-api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - log: # policy name
+        - action:    # array of condition/actions objects
+            message: ${req.method} ${req.originalUrl}
+      - proxy:
+          - action:
+              serviceEndpoint: hydrometries-service
               changeOrigin: true
